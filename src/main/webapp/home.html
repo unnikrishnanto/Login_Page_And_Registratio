@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" >
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Calistoga&display=swap" rel="stylesheet">
+    <title>Home</title>
+</head>
+<body>
+    <header>
+        <img id="logo" src="resourses/hogwarts_logo.jpg" alt="image not found">
+    </header>
+
+    
+    <div id="form-container">
+        <div id="heading-div">
+            <h1>Dashboard</h1>
+        </div>
+        <div id="form-div">
+            <form action="http://localhost:9090/LoginAndRegistration/FetchResult" method="get">
+                <div id="space-box"></div>
+                <label for="">Enter Your Rollnumber</label>
+                <input type="text" name="rollnumber" required>
+                <br>
+                <input type="submit" value="FETCH RESULT">
+           </form>
+        </div>
+    </div>
+    
+</body>
+</html>

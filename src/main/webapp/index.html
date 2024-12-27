@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" >
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Calistoga&display=swap" rel="stylesheet">
+    
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <img id="logo" src="resourses/hogwarts_logo.jpg" alt="image not found">
+    </header>
+
+    
+    <div id="form-container">
+        <div id="heading-div">
+            <h1>WELCOME TO HOGWARTS</h1>
+        </div>
+        <div id="form-div">
+            <form action="http://localhost:9090/LoginAndRegistration/login" method="post">
+                <div id="space-box"></div>
+                <label for="">Username</label>
+                <input type="text" name="uname" required>
+                <br><br>
+                
+                <label for="">Password</label>        
+                <input type="text" name="password" required>
+                <br><br>
+                <input type="submit" value="LOGIN">
+                <p>New to Hogwards? <a href="registration.html">Click here</a> to register</p>
+            </form>
+        </div>
+    </div>
+    
+</body>
+
+</html>

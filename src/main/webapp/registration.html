@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registration.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" >
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Calistoga&display=swap" rel="stylesheet">
+    <title>Sign Up</title>
+</head>
+<body>
+    <header>
+        <img id="logo" src="resourses/hogwarts_logo.jpg" alt="image not found">
+    </header>
+
+    
+    <div id="form-container">
+        <div id="heading-div">
+            <h1>Sign Up</h1>
+        </div>
+        <div id="form-div">
+            <form action="http://localhost:9090/LoginAndRegistration/RegisterUser" method="post">
+                <div id="space-box"></div>
+                <label for="">Username</label>
+                <input type="text" name="uname" required>
+                <br>
+                <label for="">Password</label>        
+                <input type="text" name="password" required>
+                <br>
+                <input type="submit" value="REGISTER">
+           </form>
+        </div>
+    </div>
+    
+</body>
+</html>
