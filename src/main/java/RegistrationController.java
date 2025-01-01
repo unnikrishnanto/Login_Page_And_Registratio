@@ -1,7 +1,5 @@
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,32 +7,23 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class RegisterUser
  */
-public class RegisterUser extends HttpServlet {
+public class RegistrationController extends HttpServlet {
 private static final long serialVersionUID = 1L;
     
-	Connection con;
-	String url = "jdbc:mysql://localhost:3306/hogwartsdb";
+	UserModel model;
 	@Override
 	public void init() {
-		try {
-			con = DriverManager.getConnection(url, "root", "11@22y@M0!.");
-			System.out.println("DB connected successfully.");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("DB connection failed");
-		}
+		model = UserModel.getUserModel();
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String userName = request.getParameter("uname");
 		String password = request.getParameter("password");
-		String query = "INSERT INTO user values(?, ?)";
+		int nora = 0;
 		
-		try(PreparedStatement pst = con.prepareStatement(query)){
-			pst.setString(1, userName);
-			pst.setString(2, password);
-			int nora = pst.executeUpdate();
+		try {
+			nora = model.registerUser(userName, password);
 			if(nora == 1) {
 				response.sendRedirect("/LoginAndRegistration/index.html");
 			}
@@ -44,22 +33,20 @@ private static final long serialVersionUID = 1L;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Invalid input");
+			System.out.println("invalid input");
 			try {
 				response.sendRedirect("/LoginAndRegistration/registration.html");
-			} catch (Exception e2) {
-				e2.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}
 
 	@Override
 	public void destroy() {
-		try {
-			if(con != null) 
-				con.close();
-		}catch (Exception e) {
-			e.printStackTrace();
+		if(model!=null) {
+			model.closeConnection();
 		}
 	}
 }

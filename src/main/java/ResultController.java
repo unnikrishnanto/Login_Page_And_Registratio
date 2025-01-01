@@ -1,10 +1,7 @@
 
 
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,37 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FetchResult
  */
-public class FetchResult extends HttpServlet {
+public class ResultController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private UserModel model ;   
 	 
-	Connection con;
 	String url = "jdbc:mysql://localhost:3306/hogwartsdb";
 	@Override
 	public void init() {
-		try {
-			con = DriverManager.getConnection(url, "root", "11@22y@M0!.");
-			System.out.println("DB connected successfully.");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("DB connection failed");
-		}
+		model = UserModel.getUserModel();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String rollNumber = request.getParameter("rollnumber");
-		String query = "SELECT * FROM result where rollnumber=?";
-		ResultSet resSet = null;
-		try(
-				PreparedStatement pst = con.prepareStatement(query);
-				PrintWriter writer = response.getWriter()
-			){
+		int convertedRollNo = Integer.parseInt(rollNumber);
+		try(PrintWriter writer = response.getWriter()){
 			response.setContentType("text/html");
-			int convertedRollNo = Integer.parseInt(rollNumber);
-			pst.setInt(1, convertedRollNo);
-			resSet  = pst.executeQuery();
+			
 			String html = "";
-			if(resSet.next()) {
+			Student student = model.getResult(convertedRollNo);
+			if(student != null) {
 				html = """
 						<!DOCTYPE html>
 						<html lang="en">
@@ -73,11 +58,11 @@ public class FetchResult extends HttpServlet {
 						                    <th>Subject 3</th>
 						                </tr>
 						                <tr>"""+
-						                	"<td>"+resSet.getString(1) +"</td>" +
-						                	"<td>"+resSet.getString("name") +"</td>" +
-						                	"<td>"+resSet.getString(3) +"</td>" +
-						                	"<td>"+resSet.getString(4) +"</td>" +
-						                	"<td>"+resSet.getString(5) +"</td>" +
+						                	"<td>"+student.rollNumber +"</td>" +
+						                	"<td>"+student.name +"</td>" +
+						                	"<td>"+student.subject1 +"</td>" +
+						                	"<td>"+student.subject2 +"</td>" +
+						                	"<td>"+student.subject3+"</td>" +
 						                "</tr>"+
 						            """
 						            </table>
@@ -111,25 +96,13 @@ public class FetchResult extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Invalid input");
-		} finally {
-			if(resSet != null) {
-				try {
-					resSet.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 
 	@Override
 	public void destroy() {
-		try {
-			if(con != null) 
-				con.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		if(model != null) 
+			model.closeConnection();
 	}
 	
 
