@@ -28,17 +28,16 @@ public class UserModel {
 	}
 
 	public boolean authenticate(String userName, String password) {
-		String query = "SELECT * FROM user where uname=? and password=?";
+		String query = "SELECT * FROM user where uname=?";
 		try (PreparedStatement pst = con.prepareStatement(query)) {
 			resSet = null;
 			pst.setString(1, userName);
-			pst.setString(2, password);
 			resSet = pst.executeQuery();
-			if (resSet.next()) {
-				return true;
-			} else {
-				System.out.println("Invalid user name or password");
+			if (!resSet.next()) {
 				return false;
+			} else {
+				String dbPassword = resSet.getString("password");
+				return PasswordEncoder.validate(password, dbPassword);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,9 +50,10 @@ public class UserModel {
 		String query = "INSERT INTO user values(?, ?)";
 		int nora = 0;
 		try (PreparedStatement pst = con.prepareStatement(query)) {
+			String encodedPassword = PasswordEncoder.encode(password);
 
 			pst.setString(1, userName);
-			pst.setString(2, password);			
+			pst.setString(2, encodedPassword);			
 			nora = pst.executeUpdate();
 			return nora;
 		} catch (Exception e) {
