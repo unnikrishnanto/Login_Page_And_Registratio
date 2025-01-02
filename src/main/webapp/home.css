@@ -12,12 +12,34 @@ header{
     width: 100vw;
     height: 60px;
     align-self: self-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
 }
+
 #logo{
     height: 100%;
     margin-left: 15px;
 }
+#logout{
+    height: 90%;
+    border-radius: 50%;
+    margin-top: -10px;
+}
+#logout:hover {
+    height: 100%;
+    border-radius: 50%;
+    margin-top: -10px;
+}
 
+header p{
+	position: absolute;
+	right: 75px;
+    top: 25px;
+    color: tomato;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
 #form-container {
     width: 900px;

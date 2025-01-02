@@ -25,6 +25,7 @@ private static final long serialVersionUID = 1L;
 		try {
 			nora = model.registerUser(userName, password);
 			if(nora == 1) {
+				System.out.println("Registration Successful..");
 				response.sendRedirect("/LoginAndRegistration/index.html");
 			}
 			else {

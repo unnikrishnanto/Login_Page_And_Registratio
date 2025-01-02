@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Authentication
@@ -27,7 +28,9 @@ public class AuthenticationController extends HttpServlet {
 		
 			try {
 				if(status) {
-				response.sendRedirect("/LoginAndRegistration/home.html");
+					HttpSession session = request.getSession(true);
+					session.setAttribute("user", userName);
+					response.sendRedirect("/LoginAndRegistration/home.html");
 				} else {
 					response.sendRedirect("/LoginAndRegistration/index.html");
 				}
